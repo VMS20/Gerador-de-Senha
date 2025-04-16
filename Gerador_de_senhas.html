@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #0F3D21, #1E1E1E);
+            /*background: linear-gradient(to bottom, #0A192F, #1E1E1E);*/
+        }
+        .container {
+            /*background: #F8F9FA;*/
+            background: #262626;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #c8c0ca;
+        }
+        input[type="number"] {
+            width: 50px;
+        }
+        button {
+            background: #0F3D21;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0a2e18;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Gerador de Senha</h2>
+        <label>Quantidade de caracteres:
+            <input type="number" id="length" min="4" max="50" value="12">
+        </label>
+        <br>
+        <label><input type="checkbox" id="uppercase" checked > Incluir Maiúsculas</label>
+        <br>
+        <label><input type="checkbox" id="lowercase" checked> Incluir Minúsculas</label>
+        <br>
+        <label><input type="checkbox" id="numbers" checked> Incluir Números</label>
+        <br>
+        <label><input type="checkbox" id="symbols" checked> Incluir Caracteres Especiais</label>
+        <br><br>
+        <button onclick="generatePassword()">Gerar Senha</button>
+        <p><strong>Senha:</strong> <span id="password"></span></p>
+    </div>
+    <script>
+        function generatePassword() {
+            const length = document.getElementById("length").value;
+            const includeUppercase = document.getElementById("uppercase").checked;
+            const includeLowercase = document.getElementById("lowercase").checked;
+            const includeNumbers = document.getElementById("numbers").checked;
+            const includeSymbols = document.getElementById("symbols").checked;
+
+            const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+            const numberChars = "0123456789";
+            const symbolChars = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+            let allChars = "";
+            if (includeUppercase) allChars += uppercaseChars;
+            if (includeLowercase) allChars += lowercaseChars;
+            if (includeNumbers) allChars += numberChars;
+            if (includeSymbols) allChars += symbolChars;
+
+            if (allChars === "") {
+                document.getElementById("password").innerText = "Selecione pelo menos uma opção!";
+                return;
+            }
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * allChars.length);
+                password += allChars[randomIndex];
+            }
+
+            document.getElementById("password").innerText = password;
+        }
+    </script>
+</body>
+</html>
